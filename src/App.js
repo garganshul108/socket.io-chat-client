@@ -3,8 +3,8 @@ import "./App.css";
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import Home from "./components/home";
-import Chat from "./components/chat";
+import Home from "./components/Home/home";
+import Chat from "./components/Chat/chat";
 
 function App() {
   return (
