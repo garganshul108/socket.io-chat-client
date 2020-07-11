@@ -30,23 +30,25 @@ class Chat extends Component {
   setMessage = (message) => {
     this.setState({ message });
   };
-  setMessages = (messages) => {
-    this.setState({ messages });
-  };
 
-  componentWillMount() {
+  componentDidMount() {
     const { username, roomId } = this.props;
     socket = io(ENDPOINT);
 
     this.setState({ username, roomId });
 
-    // socket.emit('join', { username, roomId }, (error) => {
-    //   if(error) {
-    //     alert(error);
-    //   }
-    // });
+    socket.emit("joining-room", { username, roomId }, (error) => {
+      if (error) {
+        alert(error);
+      }
+    });
+
     socket.on("message", (message) => {
-      this.setMessages((messages) => [...messages, message]);
+      console.log("recived", message);
+
+      this.setState({
+        messages: [...this.state.messages, message],
+      });
     });
 
     // socket.on("roomData", ({ users }) => {
@@ -60,22 +62,26 @@ class Chat extends Component {
 
     if (message) {
       console.log("The message is delivered.", message);
-      socket.emit("message", { username: username, roomId, message }, () =>
-        this.setMessage("")
-      );
+      const messageToSend = message;
+      this.setState({ message: "" });
+      socket.emit("message", {
+        username: username,
+        roomId,
+        text: messageToSend,
+      });
     }
   };
 
   render() {
-    console.log(this.state);
     const { username, roomId, messages, message } = this.state;
     return (
       <div className="outerContainer">
         <div className="container">
           <InfoBar room={roomId} onClose={this.props.onReturnToRoom} />
-          <Messages messages={messages} username={username} />
+          <Messages messageList={messages} username={username} />
           <Input
             message={message}
+            value={this.state.message}
             setMessage={this.setMessage}
             sendMessage={this.sendMessage}
           />
