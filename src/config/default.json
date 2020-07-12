@@ -1,4 +1,6 @@
 {
   "api-base-url": "http://localhost:5001",
-  "api-chat-url": "http://localhost:5001"
+  "api-chat-url": "http://localhost:5001",
+  "api-chat-url-prod": "https://socket-io-chat-server-app.herokuapp.com/",
+  "api-base-url-prod": "https://socket-io-chat-server-app.herokuapp.com/"
 }

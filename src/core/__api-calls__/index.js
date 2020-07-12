@@ -5,7 +5,11 @@ import makeCallPostRoom from "./call-post-room";
 import makeCallSignup from "./call-signup";
 import makeCallSignIntoRoom from "./call-sign-into-room";
 
-const baseURL = config["api-base-url"];
+let index = "api-base-url";
+if (process.env === "production") {
+  index = `${index}-prod`;
+}
+const baseURL = config[index];
 console.log(__dirname, __filename, "BASEURL", baseURL);
 
 const callLogin = makeCallLogin({

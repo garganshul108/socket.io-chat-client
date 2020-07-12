@@ -18,7 +18,11 @@ import {
 import "./chat.css";
 
 let socket;
-const ENDPOINT = config["api-chat-url"];
+let index = "api-base-url";
+if (process.env === "production") {
+  index = `${index}-prod`;
+}
+const ENDPOINT = config["index"];
 
 class Chat extends Component {
   state = {
