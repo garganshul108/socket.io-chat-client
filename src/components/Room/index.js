@@ -17,7 +17,7 @@ class Room extends Component {
     roomId: "",
   };
   setRoom = (roomId) => {
-    console.log(this.state);
+    // console.log(this.state);
     this.setState({ roomId });
   };
 
@@ -28,9 +28,10 @@ class Room extends Component {
 
     try {
       const res = await signIntoRoom({ roomId, userId: username });
+      // console.log("ROom rs", res);
       if (res.ok) {
         const roomInfo = { ...res.info.body };
-        console.log("roomInfo", roomInfo);
+        // console.log("roomInfo", roomInfo);
         this.props.onSuccess({ roomId, roomInfo });
       } else {
         alert(res.alert);
@@ -53,8 +54,9 @@ class Room extends Component {
 
     try {
       const res = await createRoom({ title: roomId, admin: username });
+      console.log("create room res", res.info.data);
       if (res.ok) {
-        this.props.onSuccess({ roomId });
+        this.props.onSuccess({ roomId, roomInfo: { ...res.info.data } });
       } else {
         alert(res.alert);
         this.setState({

@@ -1,6 +1,5 @@
 .message-container {
   display: flex;
-  justify-content: flex-end;
   padding: 0;
   margin: 5px;
 }
@@ -63,11 +62,11 @@
 }
 
 .background-dark {
-  background: #86da86;
+  background: #86daa2;
 }
 
 .background-light {
-  background: #cfcdcd;
+  background: #f3f5cc;
 }
 
 .message-timestamp {

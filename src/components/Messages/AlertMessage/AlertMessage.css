@@ -1,0 +1,42 @@
+.al-message-container {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin: 5px;
+  align-items: center;
+}
+
+.al-message-box {
+  /* background: #f3f3f3; */
+  border-radius: 5px 5px 5px 5px;
+  /* padding: 5px 5px; */
+  display: block;
+  max-width: 80%;
+}
+
+.al-message-text {
+  width: 100%;
+  letter-spacing: 0;
+  float: left;
+  padding: 5px 15px;
+  border-radius: 5px 5px 5px 5px;
+  font-size: small;
+  word-wrap: break-word;
+  background-color: #fffefe38;
+}
+
+.al-color-light {
+  color: white;
+}
+
+.al-color-dark {
+  color: #353535;
+}
+
+.al-background-dark {
+  background: #86dae4;
+}
+
+.al-background-light {
+  background: #cfcdcd;
+}

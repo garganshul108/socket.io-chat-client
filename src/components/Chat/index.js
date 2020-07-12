@@ -4,13 +4,14 @@ import TextContainer from "../TextContainer/TextContainer";
 import Messages from "../Messages/Messages";
 import InfoBar from "../InfoBar/InfoBar";
 import Input from "../Input/Input";
+import config from "../../config/default.json";
 
 import { Container, Row, Col, ButtonToolbar } from "react-bootstrap";
 
 import "./chat.css";
 
 let socket;
-const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = config["api-chat-url"];
 
 class Chat extends Component {
   state = {
@@ -35,6 +36,55 @@ class Chat extends Component {
     this.setState({ message });
   };
 
+  componentDidMount() {
+    const { username, roomId } = this.props;
+    console.log(this.props.roomInfo);
+    const { admins, members, messages } = this.props.roomInfo;
+    socket = io(ENDPOINT);
+
+    this.setState({ username, roomId, admins, members, messages });
+
+    socket.emit("joining-room", { username, roomId }, (error) => {
+      if (error) {
+        alert(error);
+      }
+    });
+
+    socket.on("message", (message) => {
+      // console.log("recived", message);
+
+      this.setState({
+        messages: [...this.state.messages, { ...message, type: "normal" }],
+      });
+    });
+
+    socket.on("alert", (message) => {
+      // console.log("recieved alert", message);
+      this.setState(
+        { messages: [...this.state.messages, { ...message, type: "alert" }] },
+        () => {
+          // console.log("Messages of the room", this.state.messages);
+        }
+      );
+    });
+  }
+
+  sendMessage = (event) => {
+    const { username, roomId, message } = this.state;
+    event.preventDefault();
+
+    if (message) {
+      // console.log("The message is delivered.", message);
+      const messageToSend = message;
+      this.setState({ message: "" });
+      socket.emit("message", {
+        username: username,
+        roomId,
+        text: messageToSend,
+      });
+    }
+  };
+
   addMemberAction = (e) => {
     e.preventDefault();
     const { newMember, username, roomId } = this.state;
@@ -46,6 +96,10 @@ class Chat extends Component {
           alert(err);
         }
       );
+
+      this.setState({
+        members: [...this.state.members, newMember],
+      });
     } else {
       alert("Input some value.");
     }
@@ -53,57 +107,10 @@ class Chat extends Component {
     this.setState({ newMember: "" });
   };
 
-  componentDidMount() {
-    const { username, roomId } = this.props;
-    const { admins, members, messages } = this.props.roomInfo;
-    socket = io(ENDPOINT);
-
-    this.setState({ username, roomId });
-    this.setState({ admins, members, messages });
-
-    socket.emit("joining-room", { username, roomId }, (error) => {
-      if (error) {
-        alert(error);
-      }
-    });
-
-    socket.on("message", (message) => {
-      console.log("recived", message);
-
-      this.setState({
-        messages: [...this.state.messages, message],
-      });
-    });
-
-    socket.on("alert", (message) => {
-      console.log("recieved alert", message);
-    });
-
-    // socket.on("roomData", ({ users }) => {
-    //   setUsers(users);
-    // });
-  }
-
-  sendMessage = (event) => {
-    const { username, roomId, message } = this.state;
-    event.preventDefault();
-
-    if (message) {
-      console.log("The message is delivered.", message);
-      const messageToSend = message;
-      this.setState({ message: "" });
-      socket.emit("message", {
-        username: username,
-        roomId,
-        text: messageToSend,
-      });
-    }
-  };
-
   render() {
     const { username, roomId, messages, message } = this.state;
     return (
-      <Container fluid>
+      <Container fluid style={{ paddingLeft: 5, paddingRight: 5 }}>
         <Row noGutters>
           <Col>
             <InfoBar room={roomId} onClose={this.props.onReturnToRoom} />

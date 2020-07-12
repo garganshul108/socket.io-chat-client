@@ -21,6 +21,7 @@ class Home extends Component {
   };
 
   onSetRoomSuccess = ({ roomId, roomInfo }) => {
+    console.log("Home setRoom ", roomInfo);
     this.setState({ roomId, roomInfo }, () => {
       this.setState({ screen: "chat" });
     });

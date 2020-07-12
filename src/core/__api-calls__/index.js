@@ -1,11 +1,12 @@
 import axios from "axios";
-
+import config from "../../config/default.json";
 import makeCallLogin from "./call-login";
 import makeCallPostRoom from "./call-post-room";
 import makeCallSignup from "./call-signup";
 import makeCallSignIntoRoom from "./call-sign-into-room";
 
-const baseURL = `http://localhost:5000`;
+const baseURL = config["api-base-url"];
+console.log(__dirname, __filename, "BASEURL", baseURL);
 
 const callLogin = makeCallLogin({
   ENDPOINT: `${baseURL}/login`,
