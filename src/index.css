@@ -15,7 +15,7 @@ code {
 *::-webkit-scrollbar {
   width: 7px; /* width of the entire scrollbar */
 }
-108, 245, 96)
+
 *::-webkit-scrollbar-track {
   background: none; /* color of the tracking area */
 }
