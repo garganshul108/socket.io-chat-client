@@ -22,7 +22,8 @@ let index = "api-base-url";
 if (process.env.NODE_ENV === "production") {
   index = `${index}-prod`;
 }
-const ENDPOINT = config["index"];
+console.log(config["index"]);
+const ENDPOINT = config[index];
 
 class Chat extends Component {
   state = {
