@@ -29,10 +29,15 @@ const Message = ({ message: { text, senderId, timestamp }, username }) => {
   ) : (
     <div className="message-container justify-start">
       <div className="message-box background-light">
-        <p className="message-text color-dark">{ReactEmoji.emojify(text)}</p>
-        <p className="message-timestamp">{timestamp}</p>
+        <span className="sender-text pr-10">{senderId}</span>
+        <span className="message-text color-dark">
+          {ReactEmoji.emojify(text)}
+        </span>
+        <br />
+        <span className="message-timestamp">
+          {new Date(timestamp).toTimeString().split(" ")[0]}
+        </span>
       </div>
-      <p className="sender-text pl-10 ">{senderId}</p>
     </div>
   );
 };

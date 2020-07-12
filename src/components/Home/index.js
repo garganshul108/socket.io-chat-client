@@ -9,6 +9,7 @@ class Home extends Component {
     screen: "login",
     username: "",
     roomId: "",
+    roomInfo: {},
   };
 
   onLoginSuccess = ({ username }) => {
@@ -19,8 +20,8 @@ class Home extends Component {
     this.setState({ screen: "setRoom", username });
   };
 
-  onSetRoomSuccess = ({ roomId }) => {
-    this.setState({ roomId }, () => {
+  onSetRoomSuccess = ({ roomId, roomInfo }) => {
+    this.setState({ roomId, roomInfo }, () => {
       this.setState({ screen: "chat" });
     });
   };
@@ -60,6 +61,7 @@ class Home extends Component {
             onLogout={this.setLoginScreen}
             roomId={this.state.roomId}
             username={this.state.username}
+            roomInfo={this.state.roomInfo}
           />
         );
       default:

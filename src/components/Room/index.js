@@ -29,7 +29,9 @@ class Room extends Component {
     try {
       const res = await signIntoRoom({ roomId, userId: username });
       if (res.ok) {
-        this.props.onSuccess({ roomId });
+        const roomInfo = { ...res.info.body };
+        console.log("roomInfo", roomInfo);
+        this.props.onSuccess({ roomId, roomInfo });
       } else {
         alert(res.alert);
         this.setState({

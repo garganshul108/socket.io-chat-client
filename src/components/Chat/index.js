@@ -5,7 +5,7 @@ import Messages from "../Messages/Messages";
 import InfoBar from "../InfoBar/InfoBar";
 import Input from "../Input/Input";
 
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, ButtonToolbar } from "react-bootstrap";
 
 import "./chat.css";
 
@@ -16,9 +16,11 @@ class Chat extends Component {
   state = {
     username: "",
     roomId: "",
-    users: [],
+    members: [],
+    admins: [],
     message: "",
     messages: [],
+    newMember: "",
   };
   setUsername = (username) => {
     this.setState({ username });
@@ -33,11 +35,31 @@ class Chat extends Component {
     this.setState({ message });
   };
 
+  addMemberAction = (e) => {
+    e.preventDefault();
+    const { newMember, username, roomId } = this.state;
+    if (newMember) {
+      socket.emit(
+        "add-member",
+        { admin: username, member: newMember, roomId },
+        (err) => {
+          alert(err);
+        }
+      );
+    } else {
+      alert("Input some value.");
+    }
+
+    this.setState({ newMember: "" });
+  };
+
   componentDidMount() {
     const { username, roomId } = this.props;
+    const { admins, members, messages } = this.props.roomInfo;
     socket = io(ENDPOINT);
 
     this.setState({ username, roomId });
+    this.setState({ admins, members, messages });
 
     socket.emit("joining-room", { username, roomId }, (error) => {
       if (error) {
@@ -87,7 +109,27 @@ class Chat extends Component {
             <InfoBar room={roomId} onClose={this.props.onReturnToRoom} />
             <Row noGutters>
               <Col sm={3}>
-                <div classNames="option-box"> options</div>
+                <div className="option-box">
+                  <p>Admins</p>
+                  {this.state.admins.map((admin) => (
+                    <p key={admin}>{admin}</p>
+                  ))}
+                  <p>Members</p>
+                  {this.state.members.map((member) => (
+                    <p key={member}>{member}</p>
+                  ))}
+
+                  <input
+                    value={this.state.newMember}
+                    onChange={(e) =>
+                      this.setState({ newMember: e.target.value })
+                    }
+                  />
+                  <button onClick={(e) => this.addMemberAction(e)}>
+                    Add Member
+                  </button>
+                  <button>Add Admin</button>
+                </div>
               </Col>
               <Col>
                 <div className="chat-box">
