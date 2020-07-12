@@ -6,7 +6,7 @@ import makeCallSignup from "./call-signup";
 import makeCallSignIntoRoom from "./call-sign-into-room";
 
 let index = "api-base-url";
-if (process.env === "production") {
+if (process.env.NODE_ENV === "production") {
   index = `${index}-prod`;
 }
 const baseURL = config[index];

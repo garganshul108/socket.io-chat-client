@@ -19,7 +19,7 @@ import "./chat.css";
 
 let socket;
 let index = "api-base-url";
-if (process.env === "production") {
+if (process.env.NODE_ENV === "production") {
   index = `${index}-prod`;
 }
 const ENDPOINT = config["index"];
