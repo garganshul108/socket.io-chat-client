@@ -1,0 +1,11 @@
+.member-box {
+  display: flex;
+  justify-content: center;
+  margin: 5px;
+  padding: 5px;
+  font-size: smaller;
+  background: rgba(205, 205, 205, 0.5);
+}
+
+.member-text {
+}

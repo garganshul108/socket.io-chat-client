@@ -1,12 +1,19 @@
 import React, { Component } from "react";
 import io from "socket.io-client";
-import TextContainer from "../TextContainer/TextContainer";
+import Members from "../Members";
 import Messages from "../Messages/Messages";
 import InfoBar from "../InfoBar/InfoBar";
 import Input from "../Input/Input";
 import config from "../../config/default.json";
 
-import { Container, Row, Col, ButtonToolbar } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  FormControl,
+  InputGroup,
+} from "react-bootstrap";
 
 import "./chat.css";
 
@@ -117,25 +124,41 @@ class Chat extends Component {
             <Row noGutters>
               <Col sm={3}>
                 <div className="option-box">
-                  <p>Admins</p>
+                  {/* <p>Admins</p>
                   {this.state.admins.map((admin) => (
                     <p key={admin}>{admin}</p>
                   ))}
                   <p>Members</p>
                   {this.state.members.map((member) => (
                     <p key={member}>{member}</p>
-                  ))}
-
-                  <input
-                    value={this.state.newMember}
-                    onChange={(e) =>
-                      this.setState({ newMember: e.target.value })
-                    }
+                  ))} */}
+                  <Members
+                    members={this.state.members}
+                    admins={this.state.admins}
                   />
-                  <button onClick={(e) => this.addMemberAction(e)}>
-                    Add Member
-                  </button>
-                  <button>Add Admin</button>
+                  <Row noGutters>
+                    <Col>
+                      <InputGroup className="mb-3">
+                        <FormControl
+                          placeholder="Enter Username"
+                          value={this.state.newMember}
+                          onChange={(e) =>
+                            this.setState({ newMember: e.target.value })
+                          }
+                        />
+                      </InputGroup>
+                    </Col>
+                    <Col sm={2}>
+                      <Button
+                        style={{ fontSize: "large" }}
+                        onClick={(e) => this.addMemberAction(e)}
+                      >
+                        +
+                      </Button>
+                    </Col>
+                  </Row>
+
+                  {/* <button>Add Admin</button> */}
                 </div>
               </Col>
               <Col>
