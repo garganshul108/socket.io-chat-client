@@ -14,20 +14,25 @@ const Message = ({ message: { text, senderId, timestamp }, username }) => {
   }
 
   return isSentByCurrentUser ? (
-    <div className="messageContainer justifyEnd">
-      <p className="sentText pr-10">{trimmedName}</p>
-      <div className="messageBox backgroundBlue">
-        <p className="messageText colorWhite">{ReactEmoji.emojify(text)}</p>
-        <p>{timestamp}</p>
+    <div className="message-container justify-end">
+      <div className="message-box background-dark">
+        <span className="sender-text pr-10">You</span>
+        <span className="message-text color-dark">
+          {ReactEmoji.emojify(text)}
+        </span>
+        <br />
+        <span className="message-timestamp">
+          {new Date(timestamp).toTimeString().split(" ")[0]}
+        </span>
       </div>
     </div>
   ) : (
-    <div className="messageContainer justifyStart">
-      <div className="messageBox backgroundLight">
-        <p className="messageText colorDark">{ReactEmoji.emojify(text)}</p>
-        <p>{timestamp}</p>
+    <div className="message-container justify-start">
+      <div className="message-box background-light">
+        <p className="message-text color-dark">{ReactEmoji.emojify(text)}</p>
+        <p className="message-timestamp">{timestamp}</p>
       </div>
-      <p className="sentText pl-10 ">{senderId}</p>
+      <p className="sender-text pl-10 ">{senderId}</p>
     </div>
   );
 };

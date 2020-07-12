@@ -12,8 +12,9 @@
   justify-content: space-between;
   background: #ffffff;
   border-radius: 8px;
-  height: 60%;
-  width: 35%;
+  margin: auto;
+  height: 95vh;
+  width: 95vh;
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
@@ -31,4 +32,10 @@
   .container {
     width: 60%;
   }
+}
+
+.chat-box {
+  border: 2px solid;
+  height: calc(100vh - 50px);
+  overflow: hidden;
 }

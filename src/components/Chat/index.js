@@ -5,10 +5,12 @@ import Messages from "../Messages/Messages";
 import InfoBar from "../InfoBar/InfoBar";
 import Input from "../Input/Input";
 
+import { Container, Row, Col } from "react-bootstrap";
+
 import "./chat.css";
 
 let socket;
-const ENDPOINT = "http://localhost:5001";
+const ENDPOINT = "http://localhost:5000";
 
 class Chat extends Component {
   state = {
@@ -51,6 +53,10 @@ class Chat extends Component {
       });
     });
 
+    socket.on("alert", (message) => {
+      console.log("recieved alert", message);
+    });
+
     // socket.on("roomData", ({ users }) => {
     //   setUsers(users);
     // });
@@ -75,18 +81,29 @@ class Chat extends Component {
   render() {
     const { username, roomId, messages, message } = this.state;
     return (
-      <div className="outerContainer">
-        <div className="container">
-          <InfoBar room={roomId} onClose={this.props.onReturnToRoom} />
-          <Messages messageList={messages} username={username} />
-          <Input
-            message={message}
-            value={this.state.message}
-            setMessage={this.setMessage}
-            sendMessage={this.sendMessage}
-          />
-        </div>
-      </div>
+      <Container fluid>
+        <Row noGutters>
+          <Col>
+            <InfoBar room={roomId} onClose={this.props.onReturnToRoom} />
+            <Row noGutters>
+              <Col sm={3}>
+                <div classNames="option-box"> options</div>
+              </Col>
+              <Col>
+                <div className="chat-box">
+                  <Messages messageList={messages} username={username} />
+                  <Input
+                    message={message}
+                    value={this.state.message}
+                    setMessage={this.setMessage}
+                    sendMessage={this.sendMessage}
+                  />
+                </div>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }
