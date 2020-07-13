@@ -9,13 +9,14 @@ import httpService from "axios";
 
 import signIntoRoom from "../../core/__usecases__/sign-into-room";
 import createRoom from "../../core/__usecases__/create-room";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Spinner } from "react-bootstrap";
 
 const ENDPOINT = "http://localhost:5001/roomId";
 
 class Room extends Component {
   state = {
     roomId: "",
+    loading: false,
   };
   setRoom = (roomId) => {
     // console.log(this.state);
@@ -25,6 +26,7 @@ class Room extends Component {
   joinRoom = async (e) => {
     const { username } = this.props;
     const { roomId } = this.state;
+    this.setState({ loading: true });
     e.preventDefault();
 
     try {
@@ -38,12 +40,14 @@ class Room extends Component {
         alert(res.alert);
         this.setState({
           roomId: "",
+          loading: false,
         });
       }
     } catch (err) {
       alert(err.message);
       this.setState({
         roomId: "",
+        loading: false,
       });
     }
   };
@@ -52,6 +56,7 @@ class Room extends Component {
     const { username } = this.props;
     const { roomId } = this.state;
     e.preventDefault();
+    this.setState({ loading: true });
 
     try {
       const res = await createRoom({ title: roomId, admin: username });
@@ -62,12 +67,14 @@ class Room extends Component {
         alert(res.alert);
         this.setState({
           roomId: "",
+          loading: false,
         });
       }
     } catch (err) {
       alert(err.message);
       this.setState({
         roomId: "",
+        loading: false,
       });
     }
   };
@@ -104,14 +111,22 @@ class Room extends Component {
                   variant="info"
                   onClick={async (e) => await this.joinRoom(e)}
                 >
-                  Push In
+                  {this.state.loading ? (
+                    <Spinner animation="border" variant="light" />
+                  ) : (
+                    "Push In"
+                  )}
                 </Button>
                 <Button
                   variant="light"
                   style={{ marginLeft: "20px" }}
                   onClick={async (e) => await this.createRoom(e)}
                 >
-                  Create new?
+                  {this.state.loading ? (
+                    <Spinner animation="border" variant="dark" />
+                  ) : (
+                    "Create new?"
+                  )}
                 </Button>
               </Form.Group>
             </div>

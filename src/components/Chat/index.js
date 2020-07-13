@@ -18,12 +18,23 @@ const ENDPOINT = config[index];
 
 class Chat extends Component {
   state = {
-    username: "",
-    roomId: "",
-    members: [],
-    admins: [],
+    username: "anshul",
+    roomId: "Test Room",
+    members: ["anshul"],
+    admins: ["anshul"],
     message: "",
-    messages: [],
+    messages: [
+      {
+        text: "Hey",
+        senderId: "anshul",
+        timestamp: new Date(),
+      },
+      {
+        text: "Hey",
+        senderId: "anurag",
+        timestamp: new Date(),
+      },
+    ],
     newMember: "",
   };
   setUsername = (username) => {
@@ -40,13 +51,13 @@ class Chat extends Component {
   };
 
   componentDidMount() {
-    const { username, roomId } = this.props;
+    // const { username, roomId } = this.props;
     // console.log(this.props.roomInfo);
-    const { admins, members, messages } = this.props.roomInfo;
+    // const { admins, members, messages } = this.props.roomInfo;
     socket = io(ENDPOINT);
 
-    this.setState({ username, roomId, admins, members, messages });
-    // const { username, roomId } = this.state;
+    // this.setState({ username, roomId, admins, members, messages });
+    const { username, roomId } = this.state;
 
     socket.emit("joining-room", { username, roomId }, (error) => {
       if (error) {

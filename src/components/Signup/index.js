@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import signupUser from "../../core/__usecases__/signup-user";
 
-import { Row, Col, Container, Form, Button } from "react-bootstrap";
+import { Row, Col, Container, Form, Button, Spinner } from "react-bootstrap";
 
 class Signup extends Component {
   state = {
     username: "",
     password: "",
     confirmPassword: "",
+    loading: false,
   };
 
   setUsername = (v) => {
@@ -29,6 +30,8 @@ class Signup extends Component {
       return alert("Username and Password must be provided.");
     }
 
+    this.setState({ loading: true });
+
     try {
       const res = await signupUser({ username, password, confirmPassword });
       if (res.ok) {
@@ -39,6 +42,7 @@ class Signup extends Component {
           username: "",
           password: "",
           confirmPassword: "",
+          loading: false,
         });
       }
     } catch (err) {
@@ -47,6 +51,7 @@ class Signup extends Component {
         username: "",
         password: "",
         confirmPassword: "",
+        loading: false,
       });
     }
   };
@@ -108,7 +113,11 @@ class Signup extends Component {
                     variant="info"
                     onClick={async (e) => await this.signupAction(e)}
                   >
-                    Sign Up
+                    {this.state.loading ? (
+                      <Spinner animation="border" variant="light" />
+                    ) : (
+                      "Sign Up"
+                    )}
                   </Button>
                   {/* <Button
                     variant="light"

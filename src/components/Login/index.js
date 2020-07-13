@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Container, Row, Col, Form } from "react-bootstrap";
+import { Button, Container, Row, Col, Form, Spinner } from "react-bootstrap";
 
 import loginUser from "../../core/__usecases__/login-user";
 const ENDPOINT = "http://localhost:5001";
@@ -14,6 +14,7 @@ class Login extends Component {
   state = {
     username: "",
     password: "",
+    loading: false,
   };
 
   setPassword = (v) => {
@@ -25,8 +26,10 @@ class Login extends Component {
 
   loginAction = async (e) => {
     e.preventDefault();
+    this.setState({ loading: true });
     const { username, password } = this.state;
     if (!username || !password) {
+      this.setState({ loading: false });
       return alert("Username and Password must be provided.");
     }
 
@@ -38,6 +41,7 @@ class Login extends Component {
       this.setState({
         username: "",
         password: "",
+        loading: false,
       });
     }
   };
@@ -87,8 +91,13 @@ class Login extends Component {
                     variant="info"
                     onClick={async (e) => await this.loginAction(e)}
                   >
-                    Sign In
+                    {this.state.loading ? (
+                      <Spinner animation="border" variant="light" />
+                    ) : (
+                      "Sign In"
+                    )}
                   </Button>
+
                   {/* <Button
                     variant="light"
                     style={{ marginLeft: "20px" }}
