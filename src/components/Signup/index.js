@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import "./signup.css";
-import httpService from "axios";
 import signupUser from "../../core/__usecases__/signup-user";
 
-const ENDPOINT = "http://localhost:5001";
+import { Row, Col, Container, Form, Button } from "react-bootstrap";
 
 class Signup extends Component {
   state = {
@@ -30,21 +28,6 @@ class Signup extends Component {
     if (!username || !password) {
       return alert("Username and Password must be provided.");
     }
-
-    // if (password !== confirmPassword) {
-    //   return alert("Passwords donot match.");
-    // }
-
-    // httpService
-    //   .post(`${ENDPOINT}/signup`, {
-    //     username,
-    //     password,
-    //   })
-    //   .then((res) => {
-    //     if (res.status >= 200) {
-    //       this.props.onSuccess({ username });
-    //     }
-    //   });
 
     try {
       const res = await signupUser({ username, password, confirmPassword });
@@ -75,48 +58,72 @@ class Signup extends Component {
 
   render() {
     return (
-      <div className="joinOuterContainer">
-        <div className="joinInnerContainer">
-          <h1 className="heading">Sign Up for Free!</h1>
-          <div>
-            <input
-              placeholder="Username"
-              className="joinInput"
-              type="text"
-              value={this.state.username}
-              onChange={(event) => this.setUsername(event.target.value)}
-            />
-          </div>
-          <div>
-            <input
-              placeholder="Password"
-              className="joinInput mt-20"
-              type="password"
-              value={this.state.password}
-              onChange={(event) => this.setPassword(event.target.value)}
-            />
-          </div>
-          <div>
-            <input
-              placeholder="Confirm Password"
-              className="joinInput mt-20"
-              type="password"
-              value={this.state.confirmPassword}
-              onChange={(event) => this.setConfirmPassword(event.target.value)}
-            />
-          </div>
-          <a onClick={async (e) => await this.signupAction(e)}>
-            <button className={"button mt-20"}>Sign Up</button>
-          </a>
-          <a
-            className={"mt-20"}
-            style={{ color: "white", cursor: "pointer" }}
-            onClick={(e) => this.setLoginAction(e)}
-          >
-            Existing User?
-          </a>
-        </div>
-      </div>
+      <Container
+        fluid
+        className="background-dark text-light"
+        style={{
+          height: "50%",
+        }}
+      >
+        <Row>
+          <Col></Col>
+          <Col sm={5}>
+            <div
+              style={{
+                padding: "60px 40px",
+              }}
+            >
+              <h5 style={{ textAlign: "center" }}>Sign Up for Free!</h5>
+              <Form>
+                <Form.Group>
+                  <Form.Control
+                    placeholder="Username"
+                    type="text"
+                    value={this.state.username}
+                    onChange={(event) => this.setUsername(event.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Control
+                    placeholder="Password"
+                    className="joinInput mt-20"
+                    type="password"
+                    value={this.state.password}
+                    onChange={(event) => this.setPassword(event.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Control
+                    placeholder="Confirm Password"
+                    className="joinInput mt-20"
+                    type="password"
+                    value={this.state.confirmPassword}
+                    onChange={(event) =>
+                      this.setConfirmPassword(event.target.value)
+                    }
+                  />
+                </Form.Group>
+                <Form.Group style={{ textAlign: "center" }}>
+                  <Button
+                    variant="info"
+                    onClick={async (e) => await this.signupAction(e)}
+                  >
+                    Sign Up
+                  </Button>
+                  {/* <Button
+                    variant="light"
+                    style={{ marginLeft: "20px" }}
+                    onClick={(e) => this.setLoginAction(e)}
+                  >
+                    Existing User?
+                  </Button> */}
+                </Form.Group>
+              </Form>
+            </div>
+          </Col>
+          <Col></Col>
+        </Row>
+      </Container>
     );
   }
 }

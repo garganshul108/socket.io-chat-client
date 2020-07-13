@@ -1,0 +1,51 @@
+.background-universal {
+  background-color: #c6ddea;
+}
+
+.background-dark {
+  background-color: #444653 !important;
+}
+
+.background-light {
+  background-color: #f1f5f9 !important;
+}
+
+.online-status-light {
+  color: #d98970;
+}
+
+.online-status-dark {
+  color: #89b672;
+}
+
+.message-sent-bg {
+  background-color: #94c2ec;
+}
+
+.message-recieved-bg {
+  background-color: #d0f1c0;
+}
+
+.text-muted-light {
+  color: #c4c8cb;
+}
+
+.text-muted-dark {
+  color: #696c76;
+}
+
+.text-dark {
+  color: #45494e;
+}
+
+.text-light {
+  color: #f4f6ff;
+}
+
+.small-text {
+  font-size: small;
+}
+
+.css-13azwyo {
+  height: 85%;
+}

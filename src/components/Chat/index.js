@@ -6,16 +6,7 @@ import InfoBar from "../InfoBar/InfoBar";
 import Input from "../Input/Input";
 import config from "../../config/default.json";
 
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  FormControl,
-  InputGroup,
-} from "react-bootstrap";
-
-import "./chat.css";
+import { Container, Row, Col, Button, Form, InputGroup } from "react-bootstrap";
 
 let socket;
 let index = "api-base-url";
@@ -27,12 +18,19 @@ const ENDPOINT = config[index];
 
 class Chat extends Component {
   state = {
-    username: "",
-    roomId: "",
-    members: [],
-    admins: [],
+    username: "anshul",
+    roomId: "Test Room",
+    members: ["anshul", "anurag"],
+    admins: ["anshul"],
     message: "",
-    messages: [],
+    messages: [
+      { senderId: "anshul", text: "Hey", timestamp: new Date().toUTCString() },
+      {
+        senderId: "anurag",
+        text: "Hey Anshul",
+        timestamp: new Date().toUTCString(),
+      },
+    ],
     newMember: "",
   };
   setUsername = (username) => {
@@ -49,12 +47,13 @@ class Chat extends Component {
   };
 
   componentDidMount() {
-    const { username, roomId } = this.props;
-    console.log(this.props.roomInfo);
-    const { admins, members, messages } = this.props.roomInfo;
+    // const { username, roomId } = this.props;
+    // console.log(this.props.roomInfo);
+    // const { admins, members, messages } = this.props.roomInfo;
     socket = io(ENDPOINT);
 
-    this.setState({ username, roomId, admins, members, messages });
+    // this.setState({ username, roomId, admins, members, messages });
+    const { username, roomId } = this.state;
 
     socket.emit("joining-room", { username, roomId }, (error) => {
       if (error) {
@@ -122,62 +121,46 @@ class Chat extends Component {
   render() {
     const { username, roomId, messages, message } = this.state;
     return (
-      <Container fluid style={{ paddingLeft: 5, paddingRight: 5 }}>
-        <Row noGutters>
+      <Container fluid style={{ padding: 0, height: "100%" }}>
+        <Row noGutters style={{ height: "100%" }}>
+          <Col
+            sm={4}
+            className="background-dark text-light"
+            style={{ padding: "5px", paddingTop: "20px" }}
+          >
+            <Form inline>
+              <Form.Control
+                placeholder="Enter Username"
+                style={{
+                  width: "calc(80% - 10px)",
+                }}
+                value={this.state.newMember}
+                onChange={(e) => this.setState({ newMember: e.target.value })}
+              />
+
+              <Button
+                className="ml-2"
+                variant="info"
+                style={{
+                  width: "calc(20% - 10px)",
+                }}
+                onClick={(e) => this.addMemberAction(e)}
+              >
+                Add
+              </Button>
+            </Form>
+            <Members members={this.state.members} admins={this.state.admins} />
+          </Col>
           <Col>
             <InfoBar room={roomId} onClose={this.props.onReturnToRoom} />
-            <Row noGutters>
-              <Col sm={3}>
-                <div className="option-box">
-                  {/* <p>Admins</p>
-                  {this.state.admins.map((admin) => (
-                    <p key={admin}>{admin}</p>
-                  ))}
-                  <p>Members</p>
-                  {this.state.members.map((member) => (
-                    <p key={member}>{member}</p>
-                  ))} */}
-                  <Members
-                    members={this.state.members}
-                    admins={this.state.admins}
-                  />
-                  <Row noGutters>
-                    <Col>
-                      <InputGroup className="mb-3">
-                        <FormControl
-                          placeholder="Enter Username"
-                          value={this.state.newMember}
-                          onChange={(e) =>
-                            this.setState({ newMember: e.target.value })
-                          }
-                        />
-                      </InputGroup>
-                    </Col>
-                    <Col sm={2}>
-                      <Button
-                        style={{ fontSize: "large" }}
-                        onClick={(e) => this.addMemberAction(e)}
-                      >
-                        +
-                      </Button>
-                    </Col>
-                  </Row>
 
-                  {/* <button>Add Admin</button> */}
-                </div>
-              </Col>
-              <Col>
-                <div className="chat-box">
-                  <Messages messageList={messages} username={username} />
-                  <Input
-                    message={message}
-                    value={this.state.message}
-                    setMessage={this.setMessage}
-                    sendMessage={this.sendMessage}
-                  />
-                </div>
-              </Col>
-            </Row>
+            <Messages messageList={messages} username={username} />
+            <Input
+              message={message}
+              value={this.state.message}
+              setMessage={this.setMessage}
+              sendMessage={this.sendMessage}
+            />
           </Col>
         </Row>
       </Container>

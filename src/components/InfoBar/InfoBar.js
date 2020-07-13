@@ -1,29 +1,31 @@
 import React from "react";
 
-import onlineIcon from "../../icons/onlineIcon.png";
 import closeIcon from "../../icons/closeIcon.png";
+import roomDP from "../../icons/room-dp.png";
 
-import "./InfoBar.css";
+import { Container, Image, Row, Col, Button } from "react-bootstrap";
 
 const InfoBar = ({ room, onClose }) => (
-  <div className="info-bar">
-    <div className="left-inner-container">
-      <img className="online-icon" src={onlineIcon} alt="online icon" />
-      <span>{room}</span>
-    </div>
-    <div className="right-inner-Container">
-      <button
-        style={{
-          background: "none",
-          border: "none",
-          marginRight: "10px",
-        }}
-        onClick={onClose}
-      >
-        <img src={closeIcon} alt="close icon" />
-      </button>
-    </div>
-  </div>
+  <Container fluid>
+    <Row className="background-light text-dark">
+      <Col>
+        <Image
+          src={roomDP}
+          style={{ height: "60px", width: "60px" }}
+          alt="Room Display Picture"
+          roundedCircle
+        />
+      </Col>
+      <Col>
+        <h3>{room}</h3>
+      </Col>
+      <Col>
+        <Button variant="info" onClick={onClose}>
+          <img src={closeIcon} alt="close icon" />
+        </Button>
+      </Col>
+    </Row>
+  </Container>
 );
 
 export default InfoBar;

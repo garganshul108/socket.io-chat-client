@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import httpService from "axios";
+import { Button, Container, Row, Col, Form } from "react-bootstrap";
 
-import "./login.css";
 import loginUser from "../../core/__usecases__/login-user";
 const ENDPOINT = "http://localhost:5001";
 
@@ -30,14 +29,6 @@ class Login extends Component {
     if (!username || !password) {
       return alert("Username and Password must be provided.");
     }
-    // httpService
-    //   .post(`${ENDPOINT}/login`, { username, password })
-    //   .then((res) => {
-    //     console.log("Response is recieved");
-    //     if (res.status >= 200) {
-    //       this.props.onSuccess({ username });
-    //     }
-    //   });
 
     const res = await loginUser({ username, password });
     if (res.ok) {
@@ -58,39 +49,60 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="joinOuterContainer">
-        <div className="joinInnerContainer">
-          <h1 className="heading">Already a user? Login</h1>
-          <div>
-            <input
-              placeholder="Username"
-              className="joinInput"
-              type="text"
-              value={this.state.username}
-              onChange={(event) => this.setUsername(event.target.value)}
-            />
-          </div>
-          <div>
-            <input
-              placeholder="Password"
-              className="joinInput mt-20"
-              type="password"
-              value={this.state.password}
-              onChange={(event) => this.setPassword(event.target.value)}
-            />
-          </div>
-          <a onClick={async (e) => await this.loginAction(e)}>
-            <button className={"button mt-20"}>Sign In</button>
-          </a>
-          <a
-            className={"mt-20"}
-            style={{ color: "white", cursor: "pointer" }}
-            onClick={(e) => this.setSignupAction(e)}
-          >
-            New User?
-          </a>
-        </div>
-      </div>
+      <Container
+        fluid
+        className="background-light text-dark"
+        style={{
+          height: "50%",
+        }}
+      >
+        <Row>
+          <Col></Col>
+          <Col sm={5}>
+            <div
+              style={{
+                padding: "60px 40px",
+              }}
+            >
+              <h5 style={{ textAlign: "center" }}>Login</h5>
+              <Form>
+                <Form.Group>
+                  <Form.Control
+                    placeholder="Username"
+                    type="text"
+                    value={this.state.username}
+                    onChange={(event) => this.setUsername(event.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Control
+                    placeholder="Password"
+                    type="password"
+                    value={this.state.password}
+                    onChange={(event) => this.setPassword(event.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group style={{ textAlign: "center" }}>
+                  <Button
+                    variant="info"
+                    onClick={async (e) => await this.loginAction(e)}
+                  >
+                    Sign In
+                  </Button>
+                  {/* <Button
+                    variant="light"
+                    style={{ marginLeft: "20px" }}
+                    onClick={(e) => this.setSignupAction(e)}
+                  >
+                    New User?
+                  </Button> */}
+                </Form.Group>
+              </Form>
+            </div>
+          </Col>
+          <Col></Col>
+        </Row>
+      </Container>
     );
   }
 }

@@ -61,14 +61,6 @@
   color: #353535;
 }
 
-.background-dark {
-  background: #86daa2;
-}
-
-.background-light {
-  background: #f3f5cc;
-}
-
 .message-timestamp {
   display: flex;
   font-size: x-small;

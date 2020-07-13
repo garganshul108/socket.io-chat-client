@@ -3,10 +3,11 @@ import Login from "../Login";
 import Room from "../Room";
 import Signup from "../Signup";
 import Chat from "../Chat";
+import { Container, Row, Col } from "react-bootstrap";
 
 class Home extends Component {
   state = {
-    screen: "login",
+    screen: "chat",
     username: "",
     roomId: "",
     roomInfo: {},
@@ -67,16 +68,28 @@ class Home extends Component {
         );
       default:
         return (
-          <Login
-            onSuccess={this.onLoginSuccess}
-            onNewUser={this.setSignupScreen}
-          />
+          <>
+            <Login
+              onSuccess={this.onLoginSuccess}
+              onNewUser={this.setSignupScreen}
+            />
+            <Signup
+              onSuccess={this.onSignupSuccess}
+              onExisitingUser={this.setLoginScreen}
+            />
+          </>
         );
     }
   };
 
   render() {
-    return <>{this.getScreen(this.state.screen)}</>;
+    return (
+      <Container style={{ background: "white", height: "100vh" }}>
+        <Row style={{ height: "100%" }}>
+          <Col style={{ padding: 0 }}>{this.getScreen(this.state.screen)}</Col>
+        </Row>
+      </Container>
+    );
   }
 }
 
