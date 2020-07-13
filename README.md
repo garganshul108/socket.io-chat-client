@@ -1,3 +1,8 @@
+### Login
+![Screenshot](https://raw.github.com/garganshul108/socket.io-chat-client/master/screenshots/Login.png)
+### Chat Room
+![Screenshot](https://raw.github.com/garganshul108/socket.io-chat-client/master/screenshots/ChatRoom.png)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
