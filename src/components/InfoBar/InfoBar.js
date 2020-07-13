@@ -7,20 +7,27 @@ import { Container, Image, Row, Col, Button } from "react-bootstrap";
 
 const InfoBar = ({ room, onClose }) => (
   <Container fluid>
-    <Row className="background-light text-dark">
+    <Row className="background-light">
       <Col>
         <Image
           src={roomDP}
-          style={{ height: "60px", width: "60px" }}
+          style={{ padding: "5px", height: "60px", width: "60px" }}
           alt="Room Display Picture"
           roundedCircle
         />
       </Col>
       <Col>
-        <h3>{room}</h3>
+        <h3 style={{ paddingTop: "10px" }} className="text-dark">
+          {room}
+        </h3>
       </Col>
-      <Col>
-        <Button variant="info" onClick={onClose}>
+      <Col style={{ display: "contents" }}>
+        <Button
+          style={{ margin: "10px" }}
+          variant="info"
+          className="text-dark"
+          onClick={onClose}
+        >
           <img src={closeIcon} alt="close icon" />
         </Button>
       </Col>
