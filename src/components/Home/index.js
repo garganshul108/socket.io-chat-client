@@ -7,7 +7,7 @@ import { Container, Row, Col } from "react-bootstrap";
 
 class Home extends Component {
   state = {
-    screen: "chat",
+    screen: "login",
     username: "",
     roomId: "",
     roomInfo: {},
